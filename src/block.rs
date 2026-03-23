@@ -1,24 +1,29 @@
+use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
-use serde::{Serialize, Deserialize};
 
 #[allow(non_snake_case)]
 #[derive(Serialize, Deserialize)]
 pub struct Block {
     pub T: String,
-    created: u64,
+    pub created: u64,
     #[serde(skip_serializing_if = "Option::is_none")]
-    miner: Option<String>,
-    nonce: String,
+    pub miner: Option<String>,
+    pub nonce: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    note: Option<String>,
-    previd: Option<String>,
-    txids: Vec<String>,
+    pub note: Option<String>,
+    pub previd: Option<String>,
+    pub txids: Vec<String>,
     #[serde(rename = "type")]
-    block_type: String
+    pub block_type: String,
 }
 
 impl Block {
-    pub fn new(previd: Option<String>, miner: Option<String>, note: Option<String>, txids: Vec<String>) -> Self {
+    pub fn new(
+        previd: Option<String>,
+        miner: Option<String>,
+        note: Option<String>,
+        txids: Vec<String>,
+    ) -> Self {
         let created = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
